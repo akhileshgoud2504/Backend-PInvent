@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const userRoute = require("./routers/userRouter");
 
 const app = express();
 
@@ -18,6 +19,9 @@ app.use(bodyParser.json());
 app.get("/",(req,res)=>{
     res.send("<h1>Home...</h1>")
 });
+
+// Routes Middleware
+app.use("/api/users", userRoute);
 
 //connect to DB and start server
 mongoose
