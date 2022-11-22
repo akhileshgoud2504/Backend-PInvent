@@ -3,6 +3,8 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cyrpto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
+const Token = require("../models/tokenModel");
 
 const generateToken = (id) =>{
     return jwt.sign({id},process.env.JWT_SECRET,{expiresIn:'1d'})
@@ -215,16 +217,52 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({email});
 
     if(!user){
-      res.status.apply(404);
+      res.status(404);
       throw new Error("User does not exist");
     }
-
+    //delete token if it exists
+    let token = await Token.findOne({userId:user._id});
+    if(token){
+      await token.deleteOne();
+    }
 
     // Create Reste Token
     const resetToken = cyrpto.randomBytes(32).toString("hex") + user._id;
 
     //Hash token to save in db
     const hashToken = cyrpto.createHash("sha256").update(resetToken).digest("hex");
+
+
+    //save to db
+    await new Token({
+      userId: user._id,
+      token: hashToken,
+      createdAt: Date.now(),
+      expiredAt: Date.now() + 30 * (60 * 1000)
+    })
+
+    //construct url
+    const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken} `
+
+    const message = `
+      <h2>Greetings, ${user.name}</h2>
+      <p>Please use the url below to reset your password</p>  
+      <p>This reset link is valid for only 30minutes.</p>
+      <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+      <p>Regards...</p>
+      <p>Akhilesh Goud</p>
+    `;
+    const subject = "Password Reset Request";
+    const send_to = user.email;
+    const sent_from = process.env.EMAIL_USER;
+
+    try{
+      await sendEmail(subject,message,send_to,sent_from);
+      res.status(200).json({ success: true, message: "Reset Email Sent" });
+    }catch{
+      res.status(500);
+      throw new Error("Email not sent, please try again");
+    }
   });
 
 module.exports = {
@@ -234,5 +272,6 @@ module.exports = {
     getUser,
     loginsStatus,
     updateUser,
-    changePassword
+    changePassword,
+    forgotPassword
 }
