@@ -5,6 +5,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const userRoute = require("./routers/userRouter");
 const productRoute = require("./routers/productRoute");
+const contactRoute = require("./routers/contactRoute");
 const errorHandler = require("./middleware/errorMiddleware");
 const cookieParser = require("cookie-parser");
 const path = require("path");
@@ -33,6 +34,7 @@ app.get("/",(req,res)=>{
 // Routes Middleware
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
+app.use("/api/contactus", contactRoute);
 
 //connect to DB and start server
 mongoose
