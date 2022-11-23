@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const userRoute = require("./routers/userRouter");
+const productRoute = require("./routers/productRoute");
 const errorHandler = require("./middleware/errorMiddleware");
 const cookieParser = require("cookie-parser");
 
@@ -15,9 +16,9 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.json());
-app.use(errorHandler);
 app.use(cookieParser());
 
+app.use(errorHandler);
 
 //Routers
 
@@ -27,6 +28,7 @@ app.get("/",(req,res)=>{
 
 // Routes Middleware
 app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
 
 //connect to DB and start server
 mongoose
