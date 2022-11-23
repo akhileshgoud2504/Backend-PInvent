@@ -7,6 +7,7 @@ const userRoute = require("./routers/userRouter");
 const productRoute = require("./routers/productRoute");
 const errorHandler = require("./middleware/errorMiddleware");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 const app = express();
 
@@ -19,6 +20,9 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(errorHandler);
+
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 //Routers
 
