@@ -45,6 +45,7 @@ const Reset = () => {
   };
 
   return (
+    <div className="home">
     <section className={`container ${styles.auth}`}>
       <Card>
         <div className={styles.form}>
@@ -86,6 +87,7 @@ const Reset = () => {
         </div>
       </Card>
     </section>
+    </div>
   );
 };
 

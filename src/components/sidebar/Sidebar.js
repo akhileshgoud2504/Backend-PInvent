@@ -3,7 +3,7 @@ import SidebarItem from "./SidebarItem";
 import "./Sidebar.scss";
 import { HiMenuAlt3 } from "react-icons/hi";
 import menu from "../../data/sidebar";
-import { RiProductHuntLine } from "react-icons/ri";
+import { AiOutlineStock } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ children }) => {
@@ -20,7 +20,7 @@ const Sidebar = ({ children }) => {
       <div style={{ width: isOpen ? "230px" : "60px" }} className="sidebar">
         <div className="top_section">
           <div style={{ display: isOpen ? "block" : "none" }} className="logo">
-            <RiProductHuntLine
+            <AiOutlineStock
               size={35}
               onClick={goHome}
               style={{ cursor: "pointer" }}

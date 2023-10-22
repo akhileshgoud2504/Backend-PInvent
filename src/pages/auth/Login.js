@@ -59,6 +59,7 @@ const Login = () => {
   };
 
   return (
+    <div className="home">
     <section className={`container ${styles.auth}`}>
       {isLoading && <Loader />}
       <Card>
@@ -99,6 +100,7 @@ const Login = () => {
         </div>
       </Card>
     </section>
+    </div>
   );
 };
 

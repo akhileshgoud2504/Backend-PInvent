@@ -65,6 +65,7 @@ const Register = () => {
   };
 
   return (
+    <div className="home">
     <section className={`container ${styles.auth}`}>
       {isLoading && <Loader />}
       <Card>
@@ -120,6 +121,7 @@ const Register = () => {
         </div>
       </Card>
     </section>
+    </div>
   );
 };
 

@@ -26,6 +26,7 @@ const Forgot = () => {
     setEmail("");
   };
   return (
+    <div className="home">
     <section className={`container ${styles.auth}`}>
       <Card>
         <div className={styles.form}>
@@ -59,6 +60,7 @@ const Forgot = () => {
         </div>
       </Card>
     </section>
+    </div>
   );
 };
 
